@@ -14,15 +14,49 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {Master} from './src/Master'
 import {ThemeProvider} from 'styled-components/native'
 import {myTheme} from './src/myTheme'
+import {Detail} from './src/Detail'
 
-const {Navigator, Screen} = createNativeStackNavigator()
+interface IHourRange {
+  from: string
+  to: string
+}
+
+export interface IHotelData {
+  checkIn: IHourRange
+  checkOut: IHourRange
+  contact: {
+    email: string
+    phoneNumber: string
+  }
+  currency: string
+  gallery: string[]
+  id: number
+  location: {
+    address: string
+    city: string
+    latitude: number
+    longitude: number
+  }
+  name: string
+  price: number
+  stars: number
+  userRating: number
+}
+
+export type RootStackProps = {
+  Hotels: undefined
+  HotelDetails: {hotelData: IHotelData}
+}
+
+const {Navigator, Screen} = createNativeStackNavigator<RootStackProps>()
 
 const App = () => {
   return (
     <NavigationContainer>
       <ThemeProvider theme={myTheme}>
         <Navigator>
-          <Screen component={Master} name="lm_test" />
+          <Screen component={Master} name="Hotels" />
+          <Screen component={Detail} name="HotelDetails" />
         </Navigator>
       </ThemeProvider>
     </NavigationContainer>

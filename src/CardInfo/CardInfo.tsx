@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/native'
 import {ViewProps, View} from 'react-native'
-import {IHotelData} from '../Master'
+import {IHotelData} from '../../App'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
 export interface ICardInfoProps extends ViewProps {
