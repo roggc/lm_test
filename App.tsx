@@ -19,7 +19,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Navigator>
-        <Screen component={Master} name="master" />
+        <Screen component={Master} name="lm_test" />
       </Navigator>
     </NavigationContainer>
   )
