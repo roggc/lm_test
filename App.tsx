@@ -12,15 +12,19 @@ import React from 'react'
 import {NavigationContainer} from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {Master} from './src/Master'
+import {ThemeProvider} from 'styled-components/native'
+import {myTheme} from './src/myTheme'
 
 const {Navigator, Screen} = createNativeStackNavigator()
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Navigator>
-        <Screen component={Master} name="lm_test" />
-      </Navigator>
+      <ThemeProvider theme={myTheme}>
+        <Navigator>
+          <Screen component={Master} name="lm_test" />
+        </Navigator>
+      </ThemeProvider>
     </NavigationContainer>
   )
 }
