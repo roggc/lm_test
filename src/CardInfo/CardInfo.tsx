@@ -3,6 +3,7 @@ import styled from 'styled-components/native'
 import {ViewProps, View} from 'react-native'
 import {IHotelData} from '../../App'
 import {Stars} from '../Stars'
+import {getEmoticon} from '../resources'
 
 const maxlimit = 27
 
@@ -17,6 +18,7 @@ export const CardInfo: React.FC<ICardInfoProps> = ({hotelData, ...props}) => {
     }
     return '$'
   }
+
   return (
     <Wrapper {...props}>
       <TitleView>
@@ -26,7 +28,10 @@ export const CardInfo: React.FC<ICardInfoProps> = ({hotelData, ...props}) => {
             : hotelData.name}
         </Text>
         <Stars numberOfStars={hotelData.stars} />
-        <Text>{hotelData.userRating}</Text>
+        <Text>
+          {hotelData.userRating}
+          {getEmoticon(hotelData.userRating)}
+        </Text>
         <Text>
           {hotelData.price}
           {getCurrencySymbol(hotelData.currency)}

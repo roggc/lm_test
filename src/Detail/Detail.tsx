@@ -7,6 +7,7 @@ import {Stars} from '../Stars'
 import {myTheme} from '../myTheme'
 import I from 'react-native-vector-icons/FontAwesome5'
 import MV, {Marker} from 'react-native-maps'
+import {getEmoticon} from '../resources'
 
 const PADDING_PLUS_MARGIN_WIDTH_CORRECTOR_FACTOR = 30
 
@@ -52,7 +53,10 @@ export const Detail = ({route}: ScreenProps) => {
         }}>
         <InfoWrapperWrapper>
           <StarsWrapper>
-            <UserRating>{hotelData.userRating}</UserRating>
+            <UserRating>
+              {hotelData.userRating}
+              {getEmoticon(hotelData.userRating)}
+            </UserRating>
             <Stars numberOfStars={hotelData.stars} color={myTheme.colors.red} />
           </StarsWrapper>
           <Line>
