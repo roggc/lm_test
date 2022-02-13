@@ -56,7 +56,13 @@ const App = () => {
       <ThemeProvider theme={myTheme}>
         <Navigator>
           <Screen component={Master} name="Hotels" />
-          <Screen component={Detail} name="HotelDetails" />
+          <Screen
+            component={Detail}
+            name="HotelDetails"
+            options={({route}) => ({
+              title: route.params.hotelData.name,
+            })}
+          />
         </Navigator>
       </ThemeProvider>
     </NavigationContainer>

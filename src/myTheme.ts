@@ -13,5 +13,6 @@ export const myTheme: DefaultTheme = {
   colors: {
     white: '#FFFFFF',
     black: '#000000',
+    red: 'red',
   },
 }
