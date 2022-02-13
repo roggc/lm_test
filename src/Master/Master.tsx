@@ -4,6 +4,7 @@ import {ListRenderItem, FlatList} from 'react-native'
 import {CardInfo} from '../CardInfo'
 import {IHotelData, RootStackProps} from '../../App'
 import type {NativeStackScreenProps} from '@react-navigation/native-stack'
+import DropDownPicker, {ValueType} from 'react-native-dropdown-picker'
 
 type ScreenProps = NativeStackScreenProps<RootStackProps, 'Hotels'>
 
@@ -12,6 +13,13 @@ const URL_TO_FETCH =
 
 export const Master = ({navigation}: ScreenProps) => {
   const [data, setData] = useState<IHotelData[]>([])
+  const [sortDataValues, setSortDataValues] = useState([
+    {label: 'Price', value: 'price'},
+    {label: 'User Rating', value: 'userRating'},
+    {label: 'Stars', value: 'stars'},
+  ])
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState<ValueType | null>(null)
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -37,6 +45,19 @@ export const Master = ({navigation}: ScreenProps) => {
 
   return (
     <View>
+      <DropDownPickerWrapper>
+        <DropDownPicker
+          items={sortDataValues}
+          setItems={setSortDataValues}
+          open={open}
+          value={value}
+          setOpen={setOpen}
+          setValue={setValue}
+          onSelectItem={item =>
+            data.sort((a, b) => b[item.value + ''] - a[item.value + ''])
+          }
+        />
+      </DropDownPickerWrapper>
       <FlatList data={data} renderItem={renderItem} />
     </View>
   )
@@ -44,3 +65,9 @@ export const Master = ({navigation}: ScreenProps) => {
 
 const View = styled.View``
 const TouchableOpacity = styled.TouchableOpacity``
+const DropDownPickerWrapper = styled.View`
+  padding: 0 10px;
+  margin-top: 5px;
+  z-index: 10;
+  flex-direction: row;
+`

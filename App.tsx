@@ -22,6 +22,7 @@ interface IHourRange {
 }
 
 export interface IHotelData {
+  [key: string]: any
   checkIn: IHourRange
   checkOut: IHourRange
   contact: {
