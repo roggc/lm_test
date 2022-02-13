@@ -1,11 +1,12 @@
 import React, {useState} from 'react'
 import styled from 'styled-components/native'
-import {ViewProps, View as V} from 'react-native'
+import {ViewProps, View as V, Platform} from 'react-native'
 import type {NativeStackScreenProps} from '@react-navigation/native-stack'
 import {RootStackProps} from '../../App'
 import {Stars} from '../Stars'
 import {myTheme} from '../myTheme'
 import I from 'react-native-vector-icons/FontAwesome5'
+import MV, {Marker} from 'react-native-maps'
 
 const PADDING_PLUS_MARGIN_WIDTH_CORRECTOR_FACTOR = 30
 
@@ -16,6 +17,31 @@ export interface IDetailProps extends ViewProps {}
 export const Detail = ({route}: ScreenProps) => {
   const {hotelData} = route.params
   const [width, setWidth] = useState(0)
+
+  const getMap = () => {
+    if (Platform.OS === 'ios') {
+      return (
+        <MapWrapper>
+          <MapView
+            initialRegion={{
+              latitude: hotelData.location.latitude,
+              longitude: hotelData.location.longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+            width={width - PADDING_PLUS_MARGIN_WIDTH_CORRECTOR_FACTOR}>
+            <Marker
+              coordinate={{
+                latitude: hotelData.location.latitude,
+                longitude: hotelData.location.longitude,
+              }}
+            />
+          </MapView>
+        </MapWrapper>
+      )
+    }
+    return null
+  }
 
   return (
     <ViewWrapper>
@@ -69,6 +95,7 @@ export const Detail = ({route}: ScreenProps) => {
             </BlockWrapper>
           </Line>
         </InfoWrapperWrapper>
+        {getMap()}
         <V>
           <ImagesWrapper horizontal>
             {hotelData.gallery.map(pic => (
@@ -94,7 +121,7 @@ const Image = styled.Image<{width: number}>`
   width: ${({width}) => width}px;
   height: ${({width}) => width}px;
   border-radius: ${({theme}) => theme.dimensions.radius}px;
-  margin: 5px;
+  margin-right: 5px;
 `
 
 const ImagesWrapper = styled.ScrollView``
@@ -117,7 +144,6 @@ const UserRating = styled.Text`
   font-size: 25px;
 `
 const InfoWrapperWrapper = styled.View`
-  flex: 1;
   justify-content: flex-start;
 `
 
@@ -142,4 +168,15 @@ const LineEnd = styled(V)`
 
 const Icon = styled(I)`
   font-size: 20px;
+`
+
+const MapView = styled(MV)<{width: number}>`
+  width: ${({width}) => width}px;
+  border-radius: 10px;
+  flex: 1;
+`
+
+const MapWrapper = styled(V)`
+  flex: 1;
+  margin: 5px 0;
 `
