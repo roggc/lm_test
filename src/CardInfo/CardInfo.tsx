@@ -4,17 +4,33 @@ import {ViewProps, View} from 'react-native'
 import {IHotelData} from '../../App'
 import {Stars} from '../Stars'
 
+const maxlimit = 27
+
 export interface ICardInfoProps extends ViewProps {
   hotelData: IHotelData
 }
 
 export const CardInfo: React.FC<ICardInfoProps> = ({hotelData, ...props}) => {
+  const getCurrencySymbol = (currency: string) => {
+    if (currency === 'EUR') {
+      return '€'
+    }
+    return '$'
+  }
   return (
     <Wrapper {...props}>
       <TitleView>
-        <Text>{hotelData.name}</Text>
+        <Text>
+          {hotelData.name.length > maxlimit
+            ? hotelData.name.substring(0, maxlimit - 3) + '...'
+            : hotelData.name}
+        </Text>
         <Stars numberOfStars={hotelData.stars} />
         <Text>{hotelData.userRating}</Text>
+        <Text>
+          {hotelData.price}
+          {getCurrencySymbol(hotelData.currency)}
+        </Text>
       </TitleView>
       <ImagesWrapper horizontal>
         {hotelData.gallery.map(pic => (
